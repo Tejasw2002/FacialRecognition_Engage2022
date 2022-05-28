@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+        }
+        html{
+            background-color: rgba(28, 131, 225, 0.1);
+        }
+        main{
+            width:60vw; 
+            margin:auto; 
+            margin-top: 40px;
+            margin-bottom: 100px;
+            min-height: 100%;
+        }
+        h3{
+            margin-bottom: 10px;
+        }
+        h2{
+            margin-left: 19vw;
+        }
+        nav{
+            width: 100vw;
+            position: sticky;
+            background-color: white;
+            top:0;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px;
+            margin-bottom: 10px;
+        }
+        a{
+            text-decoration: none;
+            color: black;
+        }
+        div{
+            text-align: justify;
+        }
+        ul{
+            display: flex;
+            justify-content: space-around;
+        }
+        ol{
+            margin-right: 20px;
+        }
+        footer{
+            position: fixed;
+            bottom: 0;
+            text-align: center;
+            width: 100vw;
+            background-color: white;
+            padding: 20px;
+        }
+
+        {% block head %}
+        {% endblock %}
+
+    </style>
+</head>
+<body>
+    <nav>
+        <h2>Content Based Recommendation System</h2>
+        <div><ul>
+            <ol><a href="/">About the Application</a></ol>
+            <ol><a href="app.py">Get Meal Recommendations</a></ol>
+        </ul></div>
+    </nav>
+
+{% block body %}
+    <!-- BODY CONTENT HERE -->
+{% endblock %}
+
+<footer>
+    Developed by Tejashwa Agarwal
+    <br>
+    <a href="https://github.com/Tejasw2002">Visit My Github Page <i class="fa fa-github"></i></a>
+</footer>
+</body>
+{% block script %}
+{% endblock %}
+</html>

@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block title %} Welcome {% endblock %}
+{% block body %}
+    <main>
+        <div>
+            <h3>Facial Recognition in Advertisements</h3>
+            At its most basic level, facial recognition offers advertisers an unfiltered look at the emotions and reactions of consumers. This provides a unique opportunity to gain valuable insight and build stronger relationships with customers in a scalable way. Let us take the example of KFC, Beijing. Beijing KFC has teamed up with Baidu, "China's Google" to develop facial-recognition technology that can be used to predict customer's orders. The artificial intelligence-enabled system can recommend menu items based on a customer's estimated age and mood. For example,  "a male customer in his early 20s" would be offered "a set meal of crispy chicken hamburger, roasted chicken wings and coke", while "a female customer in her 50s" would get a recommendation of "porridge and soybean milk for breakfast". It provides for a more personalised ordering experience by recalling repeat customers and their orders.
+        </div>
+        <br/>
+        <br/>
+        <div>
+            <h3>About my work</h3>
+            Inspired by KFC's experiment with their outlet at Beijing, I have tried to develop a content based recommendation system. The model based on the customer's current mood, suggests food items that they might order. A database of images of the customers is maintained who have previously purchased from the store along with their age, gender, ethnicity and an id, unique to each of them. The orders made by each customer along with the mood, at the time and day of ordering is also stored. The next time a person comes, their face is scanned and matched against other images in the database. If a match is found, food suggestions are shown on the basis of their mood, which is also assessed by their face image. If they are at the store for the first time, their records are stored.
+        </div>
+        <br/>
+        <br/>
+    </main>
+{% endblock %}

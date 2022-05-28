@@ -1,0 +1,137 @@
+{% extends "layout.html" %}
+{% block title %} Welcome User {% endblock %}
+{% block head %}
+
+        h2, ul{
+            all: revert;
+        }
+        
+        nav h2 {
+            margin-left: 19vw;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        .part {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .part-1 {
+            width: 60%;
+            margin-right: 5%;
+        }
+
+        .part-2 {
+            width: 35%;
+        }
+
+        span {
+            border: 2px solid rgb(96, 193, 250);
+            border-radius: 5px;
+            padding: 0 5px;
+            margin: 2px;
+            max-height: 30px;
+        }
+
+        #items {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        #menu li:hover {
+            background-color: whitesmoke;
+            cursor: pointer;
+        }
+
+        span:hover {
+            background-color: rgb(241, 207, 207);
+            cursor: pointer;
+        }
+
+        #menu {
+            width: 40vw;
+        }
+
+        .show {
+            display: flex;
+            flex-direction: row;
+        }
+        form{
+            margin-top: 5px;
+        }
+        {% endblock %}
+    {% block body %}
+    <main>
+        <div class="part">
+            <div class="part-1">
+                <h2 class="message">{{message.greeting}}</h2>
+                <h3 class="emotion">{{message.emotion}}</h2>
+                    <div></div>
+                    <h2 class="found-message">{{message.found}}</h2>
+                    <br>
+                    {% if message.found[0] == 'B' %}
+                    <!-- <div class="recommendations">{{message.recommendations}}</div> -->
+                    <div class="recommendations">
+                        <ul>
+                            {% for item in message.recommendations -%}
+                            <li>{{item}}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    <br>
+                    <br>
+                    <div class="order">
+                        <h2>What are you craving now?</h2>
+                        <div id="items"></div>
+                    </div>
+                    <form action="thankyou.html" method="post">
+                        <input type="text" name="order" id="order" style="display: none">
+                        <input type="submit" value="Place Order" id="sub">
+                    </form>
+            </div>
+            <div class="part-2">
+                <h2>Our menu</h2>
+                <ul id="menu">
+                    {% for item in data -%}
+                    <li>{{item}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </main>
+    {% endblock %}
+{% block script %}
+<script>
+    list_items = document.querySelectorAll("#menu li")
+    const div = document.getElementById("items")
+    list_items.forEach(element => {
+        element.addEventListener('click', function () {
+            const span = document.createElement("span");
+            span.classList.add("item");
+            const textnode = document.createTextNode(`${element.textContent}`)
+            span.appendChild(textnode)
+            span.addEventListener('click', function () { this.remove() })
+            div.appendChild(span)
+        })
+    });
+    document.getElementById("sub").addEventListener('click', function () {
+        x = document.getElementsByClassName("item")
+        content = ''
+        for (i = 0; i < x.length; i++)
+            content += ", " + x[i].textContent
+        content = content.substr(2)
+        console.log(content)
+        document.getElementById("order").value = content
+    })
+</script>
+{% endblock %}

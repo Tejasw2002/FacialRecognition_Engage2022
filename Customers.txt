@@ -1,0 +1,5 @@
+1, M, 30, latino hispanic
+2, M, 29, white
+3, M, 29, indian
+4, W, 33, latino hispanic
+5, W, 29, latino hispanic
