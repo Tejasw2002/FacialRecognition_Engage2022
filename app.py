@@ -1,5 +1,5 @@
 # importing the required libraries
-from flask import Flask, render_template, request, session
+from flask import Flask,render_template, request, session
 from deepface import DeepFace
 from openpyxl import load_workbook
 import numpy as np
@@ -10,27 +10,29 @@ from scipy import spatial
 import os
 import shutil
 
+#Change this to the path of your folder
+BASE_PATH = r'C:\Users\\tejaw\Desktop\Eng\\'
+
 # Directory where the images of the customers are stored
 # The files are saved with the id of the customers
-CUSTOMER_PHOTOS_DIR = r'C:\Users\tejaw\Desktop\Eng\Customers'
+CUSTOMER_PHOTOS_DIR = BASE_PATH+'Customers'
 
 # File which stores the personal records of the customers
-CUSTOMERS_RECORDS = r'C:\Users\tejaw\Desktop\Eng\Customers.txt'
+CUSTOMERS_RECORDS = CUSTOMER_PHOTOS_DIR+'.txt'
 
-# An excel file to store the orders of the customers
-filename = r'C:\Users\tejaw\Desktop\Eng\Book2.xlsx'
+# An excel file to store the order history of the customers
+HISTORY = BASE_PATH+'History.xlsx'
 
+# An excel file which contains the name of the food items and the tags associated with them
+FOODITEMS = BASE_PATH+'Foods.xlsx'
 
-wb = load_workbook(filename)
-
+wb = load_workbook(HISTORY)
+df1 = pd.read_excel(FOODITEMS)
 app = Flask(__name__)
 
 # Our temporary jpg file, uploaded by the user will be stored here
-app.config['UPLOAD_FOLDER'] = r'C:\Users\\tejaw\Desktop\Eng\\'
+app.config['UPLOAD_FOLDER'] = BASE_PATH
 app.secret_key = "super secret key"
-
-# This file contains the name of the food items and the tags associated with them
-df1 = pd.read_excel('Book1.xlsx')
 
 # Creating a vector for each food item based on the tags associated with them
 cv = CountVectorizer()
@@ -55,10 +57,9 @@ def findimage(image):
     # A dataframe of the images matching the given image is returned, with three fields,
     # id, path of the image and the distance metric
     # We use the path of the image to get the id of the customer
-
-    cust_id = int(df['identity'][0].split('/')[1].split(".")
-                  [0]) if df.shape[0] != 0 else 0
-    to_remove = r"C:\Users\tejaw\Desktop\Eng\Customers/representations_vgg_face.pkl"
+    
+    cust_id = int(os.path.splitext(os.path.basename(df['identity'][0]))[0]) if df.shape[0] != 0 else 0
+    to_remove = CUSTOMER_PHOTOS_DIR+r"\\representations_vgg_face.pkl"
     if os.path.exists(to_remove):
         os.remove(to_remove)
     found = 1
@@ -160,7 +161,7 @@ def recommend(found, cust_id, image):
     message["emotion"] = temp
     message['mood'] = emotion
     message["found"] = "We currently have no suggestions for you!!!" if found == 0 else "Based on your previous purchases, we have some suggestions for you"
-    df2 = pd.read_excel('Book2.xlsx')
+    df2 = pd.read_excel(HISTORY)
     x = list(df2.loc[(df2['Customer_ID'] == cust_id) & (
         df2['Emotion'] == emotion.capitalize())]['Order'])
     if len(x) == 0:
@@ -190,7 +191,7 @@ def recommend(found, cust_id, image):
 
 def updateExcel(cust_id, mood, order_list):
     wb.worksheets[0].append([cust_id, mood, order_list])
-    wb.save(filename)
+    wb.save(HISTORY)
 
 
 if __name__ == "__main__":
